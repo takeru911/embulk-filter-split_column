@@ -51,6 +51,10 @@ public class SplitColumnFilterPlugin
 
         @Config("output_columns")
         public SchemaConfig getOutputColumns();
+
+        @Config("is_contain_null")
+        @ConfigDefault("false")
+        public Optional<Boolean> getIsContainNull();
     }
 
     @Override
@@ -105,9 +109,16 @@ public class SplitColumnFilterPlugin
             public void add(Page page) {
                 reader.setPage(page);
                 int rowNum = 0;
+                Boolean isContainNull = task.getIsContainNull().get();
                 while (reader.nextRecord()) {
                     rowNum++;
-                    String[] words = StringUtils.split(reader.getString(targetColumn),task.getDelimiter());
+                    String[] words = null;
+                     
+                    if(!isContainNull.booleanValue()){
+                        words = StringUtils.split(reader.getString(targetColumn),task.getDelimiter());
+		    }else{
+                        words = StringUtils.splitPreserveAllTokens(reader.getString(targetColumn),task.getDelimiter());
+		    }
                     SchemaConfig outputSchemaConfig = task.getOutputColumns();
                     // check split values
                     if (outputSchemaConfig.size() != words.length) {

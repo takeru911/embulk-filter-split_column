@@ -9,6 +9,7 @@ A filter plugin for Embulk to split one string column to several any type column
 - **target_key**: string column key you want to split(string, required)
 - **output_columns**: description (array of hash, required)
   - This values is same for columns in parser
+- **is_contain_null*: if true, separated null columns.
 
 ## Example
 
