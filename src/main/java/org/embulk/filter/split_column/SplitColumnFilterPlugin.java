@@ -109,7 +109,7 @@ public class SplitColumnFilterPlugin
             public void add(Page page) {
                 reader.setPage(page);
                 int rowNum = 0;
-                Boolean isContainNull = task.getIsContainNull().get();
+                Boolean isSplitNull = task.getIsSplitNull().get();
                 while (reader.nextRecord()) {
                     rowNum++;
                     String[] words = null;
