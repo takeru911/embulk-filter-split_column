@@ -109,10 +109,12 @@ public class SplitColumnFilterPlugin
             public void add(Page page) {
                 reader.setPage(page);
                 int rowNum = 0;
+                Boolean isContainNull = task.getIsContainNull().get();
                 while (reader.nextRecord()) {
                     rowNum++;
                     String[] words = null;
-                    if(!getIsContainNull()){
+                     
+                    if(!isContainNull.booleanValue()){
                         words = StringUtils.split(reader.getString(targetColumn),task.getDelimiter());
 		    }else{
                         words = StringUtils.splitPreserveAllTokens(reader.getString(targetColumn),task.getDelimiter());
