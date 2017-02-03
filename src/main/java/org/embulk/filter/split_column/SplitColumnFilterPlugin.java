@@ -117,9 +117,14 @@ public class SplitColumnFilterPlugin
                     if(!isSplitNull.booleanValue()){
                         words = StringUtils.split(reader.getString(targetColumn),task.getDelimiter());
 		    }else{
+		      try{
                         words = StringUtils.splitPreserveAllTokens(reader.getString(targetColumn),task.getDelimiter());
+                      }catch(Exception e){
+                        log.warn(targetColumn);
+                        throw new Exception();
+		      }
 		    }
-                    SchemaConfig outputSchemaConfig = task.getOutputColumns();
+           SchemaConfig outputSchemaConfig = task.getOutputColumns();
                     // check split values
                     if (outputSchemaConfig.size() != words.length) {
                         Boolean isSkip = task.getIsSkip().get();
