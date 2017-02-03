@@ -1,5 +1,7 @@
 package org.embulk.filter.split_column;
 
+import java.lang.Exception;
+
 import org.apache.commons.lang3.StringUtils;
 import org.embulk.config.Config;
 import org.embulk.config.ConfigDefault;
@@ -117,12 +119,10 @@ public class SplitColumnFilterPlugin
                     if(!isSplitNull.booleanValue()){
                         words = StringUtils.split(reader.getString(targetColumn),task.getDelimiter());
 		    }else{
-		      try{
+
+		      String str = targetColumn.toString();
+                      log.warn(str);
                         words = StringUtils.splitPreserveAllTokens(reader.getString(targetColumn),task.getDelimiter());
-                      }catch(Exception e){
-                        log.warn(targetColumn);
-                        throw new Exception();
-		      }
 		    }
            SchemaConfig outputSchemaConfig = task.getOutputColumns();
                     // check split values
